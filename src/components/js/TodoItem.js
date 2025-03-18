@@ -2,6 +2,11 @@ import React from 'react';
 import '../css/TodoItem.css';
  
 class TodoItem extends React.Component {
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.props.isComplete !== nextProps.isComplete;
+    }
+
     render() {
         const {content, isComplete, id, onToggle, onRemove} = this.props;
  
@@ -13,6 +18,7 @@ class TodoItem extends React.Component {
                 }>
                     &times;
                 </div>
+
                 <div className={`todo-item-content ${isComplete ? 'isComplete' : ''}`}>
                     <div>
                        {content}
