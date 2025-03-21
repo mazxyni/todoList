@@ -156,7 +156,7 @@ class App extends React.Component {
             headers: {'Content-Type':'application/json'},
             method:'delete'
         }
-        fetch("api/todos" + id, data).then(res => {
+        fetch("api/todos/" + id, data).then(res => {
             if(!res.ok) {
                 throw new Error(res.status);
             } else {
