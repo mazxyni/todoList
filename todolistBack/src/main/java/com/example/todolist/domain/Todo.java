@@ -28,10 +28,10 @@ public class Todo implements Serializable {
     @Column
     private String content;
 
-    @Column
+    @Column(name="createdDateTime")
     private LocalDateTime createdDateTime;
 
-    @Column
+    @Column(name="isComplete", columnDefinition = "TINYINT(1)")
     private Boolean isComplete;
 
     // Builder 패턴을 사용하여 객체를 생성하는 생성자

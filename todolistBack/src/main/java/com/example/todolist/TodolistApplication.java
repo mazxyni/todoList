@@ -21,7 +21,7 @@ public class TodolistApplication {
 	@Bean
 	public CommandLineRunner runner(TodoRepository todoRepository) throws Exception {
 		return (args) -> {
-			IntStream.rangeClosed(1, 10).forEach(index -> todoRepository.save(Todo.builder()
+			IntStream.rangeClosed(1, 5).forEach(index -> todoRepository.save(Todo.builder()
 					.content("오늘 할 일" + index)
 					.createdDateTime(LocalDateTime.now())
 					.isComplete(false)

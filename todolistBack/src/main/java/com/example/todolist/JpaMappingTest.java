@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
 
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.todolist.domain.Todo;
 import com.example.todolist.repository.TodoRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -79,20 +80,26 @@ public class JpaMappingTest {
         assertThat(savedTodo.getIsComplete()).isEqualTo(true);
     }
 
+    @Transactional
     @Test
     public void test_delete() {
+
         // GIVEN
         Todo todo = getSaved();
+
         System.out.println("=========================");
         System.out.println(todo.getId());
         System.out.println(todo.getContent());
         System.out.println(todo.getIsComplete());
         System.out.println(todo.getCreatedDateTime());
         System.out.println("=========================");
+
         Long id = todo.getId();
 
         // WHEN
-        todoRepository.deleteById(id);
+        todoRepository.deleteAll();
+        entityManager.flush(); // DB에 반영
+        entityManager.clear();  // 영속성 컨텍스트 초기화
 
         // THEN
         assertThat(entityManager.find(Todo.class, id)).isNull();
