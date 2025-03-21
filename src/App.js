@@ -6,23 +6,36 @@ import TodoItemList from './components/js/TodoItemList';
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.id=0;
+
+        // this.id=0;
+        // this.state = {
+        //     // ***Form.js에서 Hook(useState) 사용으로 인해 제거
+        //     // input: "",
+        //     todos: [
+
+        //     ]
+        // }
+
         this.state = {
-            // ***Form.js에서 Hook(useState) 사용으로 인해 제거
-            // input: "",
-            todos: [
+            input : "",
+            todos : [
 
             ]
         }
+
         // this.handleChange = this.handleChange.bind(this);
         this.handleCreate = this.handleCreate.bind(this);
         // this.handleKeyPress = this.handleKeyPress.bind(this);
         this.handleToggle = this.handleToggle.bind(this);
         this.handleRemove = this.handleRemove.bind(this);
-    }
+        this.handleInitInfo = this.handleInitInfo.bind(this);
+        }
 
     componentDidMount() {
-        this.handleInitInfo()
+        fetch("api/todos")
+        .then(res => res.json())
+        .then(todos => this.setState({todos:todos}))
+        .catch(err => console.log(err))
     }
 
     handleInitInfo(){
@@ -54,7 +67,7 @@ class App extends React.Component {
             // input: "",
             // concat을 사용하여 배열에 추가
             todos:todos.concat({
-                id: this.id++,                  // 임의의 id를 부여하여 key error 방지
+                id: 0,                  // 임의의 id를 부여하여 key error 방지
                 content: inputValue,
                 isComplete: false
             })
